@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from imblearn.over_sampling import SMOTE
 import joblib
+from imblearn.under_sampling import RandomUnderSampler
 
 
 # Step 1: Read and combine data from multiple CSV files
@@ -76,14 +77,13 @@ target = target.astype('category')
 print("Features Data Types:\n", features.dtypes)
 print("Target Data Type:\n", target.dtypes)
 
-# Resampling using SMOTE to address class imbalance
-sampling_strategy = {
-    1: 10000,  # Desired number of samples for class 1
-    2: 60000   # Desired number of samples for class 2
-}
+# Down-sample class 0
+down_sampler = RandomUnderSampler(sampling_strategy={0: 20000}, random_state=42)
+X_down, y_down = down_sampler.fit_resample(features, target)
 
-smote = SMOTE(sampling_strategy=sampling_strategy, random_state=42, k_neighbors=5)
-X_resampled, y_resampled = smote.fit_resample(features, target)
+# Apply SMOTE on the minority classes (1 and 2)
+smote = SMOTE(sampling_strategy={1: 10000, 2: 32706}, random_state=42)
+X_resampled, y_resampled = smote.fit_resample(X_down, y_down)
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
@@ -92,7 +92,7 @@ X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, te
 print("begin model training")
 
 # Train a Random Forest Classifier
-model = RandomForestClassifier(class_weight={0:0.5, 1: 50, 2: 20}, n_estimators=1000, random_state=42)
+model = RandomForestClassifier(class_weight={0:1, 1: 50, 2: 5}, n_estimators=5 , random_state=42)
 model.fit(X_train, y_train)
 
 print("start predicting")
