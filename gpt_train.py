@@ -123,6 +123,6 @@ plt.title('Confusion Matrix')
 plt.show()
 
 # Save the trained model to a file
-joblib.dump(model, 'best_acc_model_random_forest.joblib')
+joblib.dump(model, 'best_acc_model_random_forest_1_12.joblib')
 
 print("Model saved successfully!")

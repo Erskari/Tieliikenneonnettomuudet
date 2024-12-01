@@ -5,10 +5,11 @@ import joblib
 import pandas as pd
 
 # Load the trained model
-model = joblib.load('best_acc_model_random_forest.joblib')
+model = joblib.load('best_acc_model_random_forest_1_12.joblib')
 
 # Create the main window
 root = tk.Tk()
+root.geometry('500x600')
 root.title("Accident Severity Prediction")
 
 # Function to handle prediction
@@ -80,8 +81,8 @@ def create_spinbox(label_text, min_val, max_val, increment=1):
     spinbox.pack()
     return spinbox
 
-kvl_spinbox = create_spinbox("Vehicle Weight Limit:", 200, 8000, 100)
-raskaskvl_spinbox = create_spinbox("Heavy Vehicle Limit:", 200, 8000, 100)
+kvl_spinbox = create_spinbox("Traffic:", 200, 8000, 100)
+raskaskvl_spinbox = create_spinbox("Heavy Vehicle Traffic:", 200, 8000, 100)
 
 # Entry for temperature with linked slider
 def update_temp_entry(val):
