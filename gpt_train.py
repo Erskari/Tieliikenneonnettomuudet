@@ -78,7 +78,7 @@ print("Features Data Types:\n", features.dtypes)
 print("Target Data Type:\n", target.dtypes)
 
 # Down-sample class 0
-down_sampler = RandomUnderSampler(sampling_strategy={0: 20000}, random_state=42)
+down_sampler = RandomUnderSampler(sampling_strategy={0: 25000}, random_state=42)
 X_down, y_down = down_sampler.fit_resample(features, target)
 
 # Apply SMOTE on the minority classes (1 and 2)
@@ -92,7 +92,7 @@ X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, te
 print("begin model training")
 
 # Train a Random Forest Classifier
-model = RandomForestClassifier(class_weight={0:1, 1: 50, 2: 5}, n_estimators=5 , random_state=42)
+model = RandomForestClassifier(class_weight={0:1, 1: 49.84, 2: 7.55}, n_estimators=5 , random_state=42)
 model.fit(X_train, y_train)
 
 print("start predicting")

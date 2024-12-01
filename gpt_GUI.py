@@ -46,7 +46,7 @@ def predict_severity():
         
         # Convert to DataFrame and align with model features
         df = pd.DataFrame([input_data])
-        for col in model.feature_names_in_:
+        for col in model.feature_names_in_: 
             if col not in df:
                 df[col] = 0
         df = df[model.feature_names_in_]
@@ -54,7 +54,11 @@ def predict_severity():
         prediction = model.predict(df)[0]
         predictions.append(prediction)
         
-    label_result.config(text=f"Predicted Severities: {predictions}")
+    no_injuries = predictions.count(0)
+    deaths = predictions.count(1)
+    injuries = predictions.count(2)
+        
+    label_result.config(text=f"No injuries: {no_injuries}, injuries: {injuries}, deaths: {deaths}")
     print(predictions)
 
 # Dropdowns for discrete options
@@ -81,8 +85,8 @@ def create_spinbox(label_text, min_val, max_val, increment=1):
     spinbox.pack()
     return spinbox
 
-kvl_spinbox = create_spinbox("Traffic:", 200, 8000, 100)
-raskaskvl_spinbox = create_spinbox("Heavy Vehicle Traffic:", 200, 8000, 100)
+kvl_spinbox = create_spinbox("Traffic:", 4000, 8000, 100)
+raskaskvl_spinbox = create_spinbox("Heavy Vehicle Traffic:", 400, 8000, 100)
 
 # Entry for temperature with linked slider
 def update_temp_entry(val):
@@ -104,7 +108,7 @@ prediction_count_label = tk.Label(root, text="Number of Predictions:")
 prediction_count_label.pack()
 prediction_count_entry = tk.Entry(root)
 prediction_count_entry.pack()
-prediction_count_entry.insert(0, "10")
+prediction_count_entry.insert(0, "100")
 
 # Advanced Settings Window
 def open_advanced_settings():
