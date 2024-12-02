@@ -6,6 +6,7 @@ import pandas as pd
 
 # Load the trained model
 model = joblib.load('best_acc_model_random_forest_1_12.joblib')
+#model = joblib.load('accident_severity_model.pkl')
 
 # Create the main window
 root = tk.Tk()
