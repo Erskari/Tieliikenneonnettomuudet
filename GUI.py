@@ -111,22 +111,6 @@ prediction_count_entry = tk.Entry(root)
 prediction_count_entry.pack()
 prediction_count_entry.insert(0, "100")
 
-# Advanced Settings Window
-def open_advanced_settings():
-    settings_window = tk.Toplevel(root)
-    settings_window.title("Advanced Settings")
-
-    # Add sliders or inputs for advanced fields, e.g., road condition or intersection type
-    tk.Label(settings_window, text="Road Condition (1-5):").pack()
-    road_condition_spinbox = tk.Spinbox(settings_window, from_=1, to=5)
-    road_condition_spinbox.pack()
-
-    tk.Label(settings_window, text="Intersection Type (1-10):").pack()
-    intersection_type_spinbox = tk.Spinbox(settings_window, from_=1, to=10)
-    intersection_type_spinbox.pack()
-
-advanced_button = tk.Button(root, text="Advanced Settings", command=open_advanced_settings)
-advanced_button.pack()
 
 # Button to make the prediction
 predict_button = tk.Button(root, text="Predict", command=predict_severity)
