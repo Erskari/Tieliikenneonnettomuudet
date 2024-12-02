@@ -9,9 +9,7 @@ from imblearn.over_sampling import SMOTE
 import joblib
 from imblearn.under_sampling import RandomUnderSampler
 
-
-# Step 1: Read and combine data from multiple CSV files
-years = ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021']  # Add the years you have data for
+years = ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021']  
 data_frames = []
 
 
@@ -23,12 +21,10 @@ for year in years:
 # Combine all data into a single DataFrame
 data = pd.concat(data_frames, ignore_index=True)
 
-# Strip whitespace from column names (if any)
+# Strip whitespace from column names
 data.columns = data.columns.str.strip()
 
-# Preprocessing
-
-# Convert 'Tietyo' column to numerical values (E: No Roadwork, K: Roadwork)
+# Convert 'Tietyo' column to numerical values
 data['Tietyo'] = data['Tietyo'].map({'E': 0, 'K': 1})
 
 # Convert month to categorical season
@@ -43,8 +39,7 @@ if data.isnull().sum().any():
     print("NaN values found in the dataset. Please address these before proceeding.")
     print(data.isnull().sum())
     
-    # Fill missing values
-    # Fill NaN values in numerical columns with mean or median
+    # Fill NaN values in numerical columns with mean 
     numerical_cols = data.select_dtypes(include=[np.number]).columns
     data[numerical_cols] = data[numerical_cols].fillna(data[numerical_cols].mean())
 
@@ -63,14 +58,14 @@ Vkpv_categories = ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai'
 data['Saa'] = pd.Categorical(data['Saa'], categories=saa_categories)
 data['Vkpv'] = pd.Categorical(data['Vkpv'], categories=Vkpv_categories)
 
-# Convert 'Saa' and other categorical variables to numerical using one-hot encoding
+# Convert 'Saa' and other categorical variables to numerical
 data = pd.get_dummies(data, columns=['Saa', 'Vkpv', 'Season'], drop_first=True)
 
 # Select features and target variable
 features = data.drop(columns=['Vakavuusko', 'X', 'Y', 'Onluokka', 'Osallkm'])
 target = data['Vakavuusko']
 
-# Make sure target variable is categorical if not already
+# Make sure target variable is categorical
 target = target.astype('category')
 
 # Check the types of features and target

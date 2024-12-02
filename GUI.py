@@ -6,7 +6,6 @@ import pandas as pd
 
 # Load the trained model
 model = joblib.load('best_acc_model_random_forest_1_12.joblib')
-#model = joblib.load('accident_severity_model.pkl')
 
 # Create the main window
 root = tk.Tk()
@@ -19,7 +18,7 @@ def predict_severity():
     predictions = []
     
     for _ in range(num_predictions):
-        # Generate random input values (or use fixed values for demonstration)
+        # Generate random input values
         input_data = {
             'Tienpit': random.randint(1, 3),
             'Tie': random.randint(1, 300),
@@ -42,7 +41,6 @@ def predict_severity():
             'Kvl': int(kvl_spinbox.get()),
             'Raskaskvl': int(raskaskvl_spinbox.get()),
             'Lampotila': int(temp_entry.get()),
-            # Add more fields if needed
         }
         
         # Convert to DataFrame and align with model features
@@ -104,21 +102,24 @@ temp_entry = tk.Entry(root)
 temp_entry.pack()
 temp_entry.insert(0, "0")
 
-# Prediction count entry for batch predictions
+# Prediction count entry for predictions
 prediction_count_label = tk.Label(root, text="Number of Predictions:")
 prediction_count_label.pack()
 prediction_count_entry = tk.Entry(root)
 prediction_count_entry.pack()
 prediction_count_entry.insert(0, "100")
 
-
 # Button to make the prediction
 predict_button = tk.Button(root, text="Predict", command=predict_severity)
-predict_button.pack()
+predict_button.pack()   
 
 # Label to display result
 label_result = tk.Label(root, text="")
 label_result.pack()
+
+# Create a button that closes the window
+close_button = tk.Button(root, text="Close", command=root.destroy)
+close_button.pack(pady=20)
 
 # Run the GUI event loop
 root.mainloop()
